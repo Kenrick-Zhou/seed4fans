@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  root 'dusers#index'
+  get 'dusers/fetch' => 'dusers#fetch'
+
   resources :dusers
 
   # The priority is based upon order of creation: first created -> highest priority.

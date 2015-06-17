@@ -1,5 +1,21 @@
 <h1>Listing dusers</h1>
 
+<%# link_to 'Let\'s Fetch Duser', controller: "dusers", action:"fetch" %>
+
+<br/>
+<h3>Lets fetch user!</h3>
+<%= form_tag("dusers/fetch", method: "get") do %>
+  <%= label_tag(:cookie, "Cookie:") %>
+  <%= text_field_tag(:cookie) %>
+  <br/>
+  <%= label_tag(:start_at, "Start at:") %>
+  <%= text_field_tag(:start_at) %>
+  <%= submit_tag("Fetch!") %>
+<% end %>
+
+<br/>
+
+
 <table>
   <thead>
     <tr>
@@ -18,6 +34,7 @@
   <tbody>
     <% @dusers.each do |duser| %>
       <tr>
+        <td><%= duser.did %></td>
         <td><%= duser.uid %></td>
         <td><%= duser.name %></td>
         <td><%= duser.c_follower %></td>

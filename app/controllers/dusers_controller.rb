@@ -1,3 +1,6 @@
+require 'nokogiri'
+require 'open-uri'
+
 class DusersController < ApplicationController
   before_action :set_duser, only: [:show, :edit, :update, :destroy]
 
@@ -10,6 +13,134 @@ class DusersController < ApplicationController
   # GET /dusers/1
   # GET /dusers/1.json
   def show
+  end
+
+  def fetch
+    @duser = Duser.new
+    cookie = params[:cookie]
+    start_id =  params[:start_at].to_i
+    Thread.new do
+      loop do
+        did, uid, name, c_follower, c_m_do, c_m_wish, c_m_collect, c_doulist, c_review, error = nil
+        did = start_id
+        if Duser.where(["did = ? and uid is not null", did]).any?
+          start_id += 1
+          next
+        end
+
+        begin
+
+
+          # Fetch and parse HTML document
+          #http://www.douban.com/people/56910458/
+          #http://www.douban.com/people/35370642/
+          doc = Nokogiri::HTML(open("http://www.douban.com/people/#{start_id}/",
+          #doc = Nokogiri::HTML(open("http://www.douban.com/people/croath/",
+                                    "User-Agent" => "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/600.6.3 (KHTML, like Gecko) Version/8.0.6 Safari/600.6.3",
+                                    "Accept" => "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+                                    "referer" => "http://www.douban.com",
+                                    "Cookie" => cookie
+                               ))
+
+          name = doc.at_css("head title").content.strip
+          puts "name：" + name
+
+          uid = doc.at_css("div#profile div.user-info div.pl").content.split(" ")[0]
+          puts "uid: " + uid
+
+          doc.css("div#movie h2 a").each do |a|
+            str = a.content
+            if str.include? "在看"
+              mc = /(\d+)/.match(str)
+              c_m_do = mc[0]
+              puts "在看：" + c_m_do
+            elsif str.include? "想看"
+              mc = /(\d+)/.match(str)
+              c_m_wish = mc[0]
+              puts "想看：" + c_m_wish
+            elsif str.include? "看过"
+              mc = /(\d+)/.match(str)
+              c_m_collect = mc[0]
+              puts "看过：" + c_m_collect
+            end
+          end
+
+          doc.css("p.rev-link a").each do |a|
+            str = a.content
+            mc = /(\d+)/.match(str)
+            c_follower = mc[0]
+            puts "被关注数：" + c_follower
+          end
+
+          doc.css("div#doulist span.pl a").each do |a|
+            str = a.content
+            mc = /(\d+)/.match(str)
+            c_doulist = mc[0]
+            puts "豆列数：" + c_doulist
+          end
+
+          doc.css("div#review h2 span.pl a").each do |a|
+            str = a.content
+            if str.start_with?("评论")
+              mc = /(\d+)/.match(str)
+              c_review = mc[0]
+              puts "评论数：" + c_review
+            end
+          end
+
+          http_error_seq = 0
+
+        rescue OpenURI::HTTPError => e
+          http_error_seq += 1
+          error = "HTTPError|: " + e.to_s
+          puts error
+        rescue NameError => e
+          error = "NameError|: " + e.to_s
+          puts error
+        rescue StandardError => bang
+          error = "StandardError|: " + bang.to_s
+          puts error
+        ensure
+          if Duser.where(["did = ? and uid is null", did]).any?
+            @duser = Duser.find_by did: did
+            @duser.update({
+                              did: did,
+                              uid: uid,
+                              name: name,
+                              c_follower: c_follower,
+                              c_m_do: c_m_do,
+                              c_m_wish: c_m_wish,
+                              c_m_collect: c_m_collect,
+                              c_doulist: c_doulist,
+                              c_review: c_review,
+                              error: error
+                          })
+          else
+            @duser = Duser.new({
+                                   did: did,
+                                   uid: uid,
+                                   name: name,
+                                   c_follower: c_follower,
+                                   c_m_do: c_m_do,
+                                   c_m_wish: c_m_wish,
+                                   c_m_collect: c_m_collect,
+                                   c_doulist: c_doulist,
+                                   c_review: c_review,
+                                   error: error
+                               })
+          end
+          @duser.save
+
+          puts "============"
+          start_id += 1
+          sleep 2
+
+          break if http_error_seq > 5
+        end
+
+      end
+    end
+    puts "thread done!"
   end
 
   # GET /dusers/new
@@ -69,6 +200,6 @@ class DusersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def duser_params
-      params.require(:duser).permit(:uid, :name, :c_follower, :c_m_do, :c_m_wish, :c_m_collect, :c_doulist, :error)
+      params.require(:duser).permit(:did, :uid, :name, :c_follower, :c_m_do, :c_m_wish, :c_m_collect, :c_doulist, :c_review, :error)
     end
 end
