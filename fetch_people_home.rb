@@ -15,13 +15,13 @@ start_id = 1000001
     # Fetch and parse HTML document
     #http://www.douban.com/people/56910458/
     #http://www.douban.com/people/35370642/
-    # doc = Nokogiri::HTML(open("http://www.douban.com/people/#{start_id}/",
-    doc = Nokogiri::HTML(open("http://www.douban.com/people/35370642/",
-    "User-Agent" => "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/600.6.3 (KHTML, like Gecko) Version/8.0.6 Safari/600.6.3",
-    "Accept" => "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-    "referer" => "http://www.douban.com",
-    "Cookie" => "dbcl2=47460982:F8hiarH1JZY"
-    ))
+    doc = Nokogiri::HTML(open("http://www.douban.com/people/3557072/",
+    #doc = Nokogiri::HTML(open("http://www.douban.com/people/croath/",
+                              "User-Agent" => "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/600.6.3 (KHTML, like Gecko) Version/8.0.6 Safari/600.6.3",
+                              "Accept" => "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+                              "referer" => "http://www.douban.com",
+                              "Cookie" => "dbcl2=47460982:eYsMeJXxSJc"
+                         ))
 
     name = doc.at_css("head title").content.strip
     puts "name：" + name
@@ -48,8 +48,8 @@ start_id = 1000001
 
     doc.css("p.rev-link a").each do |a|
       str = a.content
-      mc = /(\d+)/.match(str)
-      c_follower = mc[0]
+      mc = /被(\d+)人关注/.match(str)
+      c_follower = mc[1]
       puts "被关注数：" + c_follower
     end
 
@@ -61,6 +61,7 @@ start_id = 1000001
     end
 
     doc.css("div#review h2 span.pl a").each do |a|
+      puts a
       str = a.content
       if str.start_with?("评论")
         mc = /(\d+)/.match(str)
@@ -68,15 +69,25 @@ start_id = 1000001
         puts "评论数：" + c_review
       end
     end
-    
+
+  #   puts "seq-head: " + error_seq
+  #   error_seq = 0
+  #   puts "seq-tail: " + error_seq
+  #
   rescue OpenURI::HTTPError => e
-    puts "HTTPError|: " + e.to_s
+    error_seq += 1 if e.to_s.include?("redirection forbidden")
+    error = "HTTPError|: " + e.to_s
+    puts error
   rescue NameError => e
-    puts "HTTPError|: " + e.to_s
+    error_seq += 1 if e.to_s.include?("redirection forbidden")
+    error = "NameError|: " + e.to_s
+    puts error
   rescue StandardError => bang
-    puts "HTTPError|: " + bang.to_s
+    error_seq += 1 if bang.to_s.include?("redirection forbidden")
+    error = "StandardError|: " + bang.to_s
+    puts error
   end
   
-  start_id += 1
-  sleep 2
+  # start_id += 1
+  # sleep 2
 # end

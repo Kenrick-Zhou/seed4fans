@@ -19,15 +19,17 @@ class DusersController < ApplicationController
     @duser = Duser.new
     cookie = params[:cookie]
     start_id =  params[:start_at].to_i
-    http_error_seq = 0
+    error_seq = 0
     Thread.new do
       loop do
         did, uid, name, c_follower, c_m_do, c_m_wish, c_m_collect, c_doulist, c_review, error = nil
         did = start_id
-        if Duser.where(["did = ? and uid is not null", did]).any?
+        if (Duser.where(["did = ? and uid is not null", did]).any?) |
+           (Duser.where(["did = ? and uid is null and name = ? ", did, "豆瓣"]).any?)
           start_id += 1
           next
         end
+
 
         begin
 
@@ -89,16 +91,20 @@ class DusersController < ApplicationController
             end
           end
 
-          http_error_seq = 0
+          puts "seq-head: " + error_seq.to_s
+          error_seq = 0
+          puts "seq-tail: " + error_seq.to_s
 
         rescue OpenURI::HTTPError => e
-          http_error_seq += 1
+          error_seq += 1 if e.to_s.include?("redirection forbidden")
           error = "HTTPError|: " + e.to_s
           puts error
         rescue NameError => e
+          error_seq += 1 if e.to_s.include?("redirection forbidden")
           error = "NameError|: " + e.to_s
           puts error
         rescue StandardError => bang
+          error_seq += 1 if bang.to_s.include?("redirection forbidden")
           error = "StandardError|: " + bang.to_s
           puts error
         ensure
@@ -136,7 +142,7 @@ class DusersController < ApplicationController
           start_id += 1
           sleep 2
 
-          break if http_error_seq > 5
+          break if error_seq > 5
         end
 
       end
