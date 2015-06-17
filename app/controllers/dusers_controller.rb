@@ -19,6 +19,7 @@ class DusersController < ApplicationController
     @duser = Duser.new
     cookie = params[:cookie]
     start_id =  params[:start_at].to_i
+    http_error_seq = 0
     Thread.new do
       loop do
         did, uid, name, c_follower, c_m_do, c_m_wish, c_m_collect, c_doulist, c_review, error = nil
