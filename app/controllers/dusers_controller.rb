@@ -67,8 +67,8 @@ class DusersController < ApplicationController
 
           doc.css("p.rev-link a").each do |a|
             str = a.content
-            mc = /(\d+)/.match(str)
-            c_follower = mc[0]
+            mc = /被(\d+)人关注/.match(str)
+            c_follower = mc[1]
             puts "被关注数：" + c_follower
           end
 
