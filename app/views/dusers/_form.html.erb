@@ -1,0 +1,49 @@
+<%= form_for(@duser) do |f| %>
+  <% if @duser.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@duser.errors.count, "error") %> prohibited this duser from being saved:</h2>
+
+      <ul>
+      <% @duser.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :uid %><br>
+    <%= f.text_field :uid %>
+  </div>
+  <div class="field">
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :c_follower %><br>
+    <%= f.number_field :c_follower %>
+  </div>
+  <div class="field">
+    <%= f.label :c_m_do %><br>
+    <%= f.number_field :c_m_do %>
+  </div>
+  <div class="field">
+    <%= f.label :c_m_wish %><br>
+    <%= f.number_field :c_m_wish %>
+  </div>
+  <div class="field">
+    <%= f.label :c_m_collect %><br>
+    <%= f.number_field :c_m_collect %>
+  </div>
+  <div class="field">
+    <%= f.label :c_doulist %><br>
+    <%= f.number_field :c_doulist %>
+  </div>
+  <div class="field">
+    <%= f.label :error %><br>
+    <%= f.text_field :error %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

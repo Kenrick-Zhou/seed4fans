@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  uid: MyString
+  name: MyString
+  c_follower: 1
+  c_m_do: 1
+  c_m_wish: 1
+  c_m_collect: 1
+  c_doulist: 1
+  error: MyString
+
+two:
+  uid: MyString
+  name: MyString
+  c_follower: 1
+  c_m_do: 1
+  c_m_wish: 1
+  c_m_collect: 1
+  c_doulist: 1
+  error: MyString

@@ -1,0 +1,44 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Uid:</strong>
+  <%= @duser.uid %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @duser.name %>
+</p>
+
+<p>
+  <strong>C follower:</strong>
+  <%= @duser.c_follower %>
+</p>
+
+<p>
+  <strong>C m do:</strong>
+  <%= @duser.c_m_do %>
+</p>
+
+<p>
+  <strong>C m wish:</strong>
+  <%= @duser.c_m_wish %>
+</p>
+
+<p>
+  <strong>C m collect:</strong>
+  <%= @duser.c_m_collect %>
+</p>
+
+<p>
+  <strong>C doulist:</strong>
+  <%= @duser.c_doulist %>
+</p>
+
+<p>
+  <strong>Error:</strong>
+  <%= @duser.error %>
+</p>
+
+<%= link_to 'Edit', edit_duser_path(@duser) %> |
+<%= link_to 'Back', dusers_path %>

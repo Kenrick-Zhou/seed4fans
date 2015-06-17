@@ -1,0 +1,39 @@
+<h1>Listing dusers</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Uid</th>
+      <th>Name</th>
+      <th>C follower</th>
+      <th>C m do</th>
+      <th>C m wish</th>
+      <th>C m collect</th>
+      <th>C doulist</th>
+      <th>Error</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @dusers.each do |duser| %>
+      <tr>
+        <td><%= duser.uid %></td>
+        <td><%= duser.name %></td>
+        <td><%= duser.c_follower %></td>
+        <td><%= duser.c_m_do %></td>
+        <td><%= duser.c_m_wish %></td>
+        <td><%= duser.c_m_collect %></td>
+        <td><%= duser.c_doulist %></td>
+        <td><%= duser.error %></td>
+        <td><%= link_to 'Show', duser %></td>
+        <td><%= link_to 'Edit', edit_duser_path(duser) %></td>
+        <td><%= link_to 'Destroy', duser, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Duser', new_duser_path %>
