@@ -1,6 +1,11 @@
 Rails.application.routes.draw do
-  root 'dusers#index'
-  get 'dusers/fetch' => 'dusers#fetch'
+
+  # root 'dusers#index'
+  # get 'dusers/fetch' => 'dusers#fetch'
+
+  root :to => 'welcome#index'
+  get 'welcome' => 'welcome#index'
+
 
   resources :dusers
 

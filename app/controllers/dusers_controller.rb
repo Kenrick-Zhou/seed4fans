@@ -7,8 +7,10 @@ class DusersController < ApplicationController
   # GET /dusers
   # GET /dusers.json
   def index
-    @dusers = Duser.all
+    # @dusers = Duser.all
+    @dusers = Duser.order('id desc').page(params[:page]).per(params[:per])
   end
+
 
   # GET /dusers/1
   # GET /dusers/1.json
