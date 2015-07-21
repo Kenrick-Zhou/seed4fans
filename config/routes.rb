@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  resources :photos
+
   resources :movie_tags
 
   resources :tags
