@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
 
+  resources :movie_celebrities
+
+  resources :celebrities
+
   resources :akas
 
   resources :movies

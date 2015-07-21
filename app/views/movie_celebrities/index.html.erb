@@ -1,0 +1,31 @@
+<h1>Listing movie_celebrities</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Movie</th>
+      <th>Celebrity</th>
+      <th>Name</th>
+      <th>Role</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @movie_celebrities.each do |movie_celebrity| %>
+      <tr>
+        <td><%= movie_celebrity.movie_id %></td>
+        <td><%= movie_celebrity.celebrity_id %></td>
+        <td><%= movie_celebrity.name %></td>
+        <td><%= movie_celebrity.role %></td>
+        <td><%= link_to 'Show', movie_celebrity %></td>
+        <td><%= link_to 'Edit', edit_movie_celebrity_path(movie_celebrity) %></td>
+        <td><%= link_to 'Destroy', movie_celebrity, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Movie celebrity', new_movie_celebrity_path %>
