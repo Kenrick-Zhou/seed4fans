@@ -13,5 +13,6 @@ class Movie < ActiveRecord::Base
   has_many :movie_languages
   has_many :languages, :through => :movie_languages
 
-
+  has_many :movie_tags
+  has_many :tags, :through => :movie_tags
 end

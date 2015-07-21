@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
 
+  resources :movie_tags
+
+  resources :tags
+
   resources :movie_languages
 
   resources :languages
