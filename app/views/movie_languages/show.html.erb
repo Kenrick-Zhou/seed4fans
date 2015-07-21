@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Movie:</strong>
+  <%= @movie_language.movie_id %>
+</p>
+
+<p>
+  <strong>Language:</strong>
+  <%= @movie_language.language_id %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @movie_language.name %>
+</p>
+
+<%= link_to 'Edit', edit_movie_language_path(@movie_language) %> |
+<%= link_to 'Back', movie_languages_path %>

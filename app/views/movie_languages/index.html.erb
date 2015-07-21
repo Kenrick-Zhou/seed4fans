@@ -1,0 +1,29 @@
+<h1>Listing movie_languages</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Movie</th>
+      <th>Language</th>
+      <th>Name</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @movie_languages.each do |movie_language| %>
+      <tr>
+        <td><%= movie_language.movie_id %></td>
+        <td><%= movie_language.language_id %></td>
+        <td><%= movie_language.name %></td>
+        <td><%= link_to 'Show', movie_language %></td>
+        <td><%= link_to 'Edit', edit_movie_language_path(movie_language) %></td>
+        <td><%= link_to 'Destroy', movie_language, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Movie language', new_movie_language_path %>
