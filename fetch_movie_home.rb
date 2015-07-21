@@ -3,7 +3,7 @@ require 'open-uri'
 require 'mechanize'
 
 
-begin
+# begin
   # Fetch and parse HTML document
   #末代皇帝#  http://movie.douban.com/subject/1293172/
   #机器人9号# http://movie.douban.com/subject/1764796/
@@ -13,7 +13,7 @@ begin
   #开卷8分钟# http://movie.douban.com/subject/26292731/
   #风云再起#  http://movie.douban.com/subject/26269551/
   #老千大拍档#http://movie.douban.com/subject/1302840/
-  uri = "http://movie.douban.com/subject/2154390/"
+  uri = "http://movie.douban.com/subject/1302842/"
   
   agent = Mechanize.new
   page = agent.get(uri, {
@@ -42,10 +42,11 @@ begin
   puts cn_title = tmp[0, tmp.index('的短评')]
   
   
-  tmp = doc.css('div#content h1 span')
-  title = tmp[0].content
-  puts original_title = title[cn_title.length + 1 .. -1]
-  puts pubyear = tmp[1].content[1, 4]
+  puts pubyear = doc.at_css('div#content h1 span.year').content[1..-2] unless doc.at_css('div#content h1 span.year').nil?
+  # puts tmp
+  # title = tmp[0].content
+  # puts original_title = title[cn_title.length + 1 .. -1]
+  # puts pubyear = tmp[1].content[1, 4]
   
   
   puts '########################################'
@@ -242,36 +243,37 @@ begin
   puts '****************************************'
   puts '** 最新评论'
   new_comment = nil
-
-  page = page.links_with(:text => '最新')[-1].click
-  doc = Nokogiri::HTML.parse(page.body, nil, 'utf-8')
   
-  # doc.css('div#new-comments div.comment-item div.comment').each do |div|
-  doc.css('div#comments div.comment-item div.comment').each do |div|
-    puts div.at_css('h3 span.comment-info a').attr('href').split('/')[-1]
-    puts div.at_css('h3 span.comment-info a').content
-    #很差、较差、还行、推荐、力荐
-    puts div.at_css('h3 span.comment-info span.rating').attr('title') unless div.at_css('h3 span.comment-info span.rating').nil?
-    # puts div.at_css('h3 span.comment-info span.rating').attr('title')#很差、较差、还行、推荐、力荐
-    puts div.css('h3 span.comment-info span')[-1].content.strip
-    puts div.at_css('p').content.strip
-    puts '-------'
+  if page.links_with(:text => '最新').size != 0
+    page = page.links_with(:text => '最新')[-1].click
+    doc = Nokogiri::HTML.parse(page.body, nil, 'utf-8')
+  
+    # doc.css('div#new-comments div.comment-item div.comment').each do |div|
+    doc.css('div#comments div.comment-item div.comment').each do |div|
+      puts div.at_css('h3 span.comment-info a').attr('href').split('/')[-1]
+      puts div.at_css('h3 span.comment-info a').content
+      #很差、较差、还行、推荐、力荐
+      puts div.at_css('h3 span.comment-info span.rating').attr('title') unless div.at_css('h3 span.comment-info span.rating').nil?
+      # puts div.at_css('h3 span.comment-info span.rating').attr('title')#很差、较差、还行、推荐、力荐
+      puts div.css('h3 span.comment-info span')[-1].content.strip
+      puts div.at_css('p').content.strip
+      puts '-------'
+    end
   end
   
   
   
   
-  
-rescue OpenURI::HTTPError => e
-  error_seq += 1 if e.to_s.include?("redirection forbidden")
-  error = "HTTPError|: " + e.to_s
-  puts error
-rescue NameError => e
-  error_seq += 1 if e.to_s.include?("redirection forbidden")
-  error = "NameError|: " + e.to_s
-  puts error
-rescue StandardError => bang
-  error_seq += 1 if bang.to_s.include?("redirection forbidden")
-  error = "StandardError|: " + bang.to_s
-  puts error
-end
+# rescue OpenURI::HTTPError => e
+#   error_seq += 1 if e.to_s.include?("redirection forbidden")
+#   error = "HTTPError|: " + e.to_s
+#   puts error
+# rescue NameError => e
+#   error_seq += 1 if e.to_s.include?("redirection forbidden")
+#   error = "NameError|: " + e.to_s
+#   puts error
+# rescue StandardError => bang
+#   error_seq += 1 if bang.to_s.include?("redirection forbidden")
+#   error = "StandardError|: " + bang.to_s
+#   puts error
+# end
