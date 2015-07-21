@@ -12,7 +12,8 @@ begin
   #编辑部的故事#  http://movie.douban.com/subject/2154390/
   #开卷8分钟# http://movie.douban.com/subject/26292731/
   #风云再起#  http://movie.douban.com/subject/26269551/
-  uri = "http://movie.douban.com/subject/1867744/"
+  #老千大拍档#http://movie.douban.com/subject/1302840/
+  uri = "http://movie.douban.com/subject/2154390/"
   
   agent = Mechanize.new
   page = agent.get(uri, {
@@ -35,8 +36,11 @@ begin
   puts '## 各种名称、年代'
   title, cn_title, original_title, pubyear = nil
   
-  tmp = doc.at_css('div#content div.article div.related-info h2').content
-  puts cn_title = tmp[0, tmp.index('的剧情简介')]
+  # tmp = doc.at_css('div#content div.article div.related-info h2').content
+  # puts cn_title = tmp[0, tmp.index('的剧情简介')]
+  tmp = doc.at_css('div#comments-section h2 i').content
+  puts cn_title = tmp[0, tmp.index('的短评')]
+  
   
   tmp = doc.css('div#content h1 span')
   title = tmp[0].content
@@ -239,8 +243,7 @@ begin
   puts '** 最新评论'
   new_comment = nil
 
-  page = page.links.find { |l| l.text == '最新' }.click
-  # puts page.body
+  page = page.links_with(:text => '最新')[-1].click
   doc = Nokogiri::HTML.parse(page.body, nil, 'utf-8')
   
   # doc.css('div#new-comments div.comment-item div.comment').each do |div|
