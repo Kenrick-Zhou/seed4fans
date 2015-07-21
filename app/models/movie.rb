@@ -7,4 +7,7 @@ class Movie < ActiveRecord::Base
   has_many :movie_types
   has_many :types, :through => :movie_types
 
+  has_many :movie_countries
+  has_many :countries, :through => :movie_countries
+
 end

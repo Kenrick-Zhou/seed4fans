@@ -1,0 +1,29 @@
+<h1>Listing movie_countries</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Movie</th>
+      <th>Country</th>
+      <th>Name</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @movie_countries.each do |movie_country| %>
+      <tr>
+        <td><%= movie_country.movie_id %></td>
+        <td><%= movie_country.country_id %></td>
+        <td><%= movie_country.name %></td>
+        <td><%= link_to 'Show', movie_country %></td>
+        <td><%= link_to 'Edit', edit_movie_country_path(movie_country) %></td>
+        <td><%= link_to 'Destroy', movie_country, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Movie country', new_movie_country_path %>

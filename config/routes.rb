@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
 
+  resources :movie_countries
+
+  resources :countries
+
   resources :movie_types
 
   resources :types
