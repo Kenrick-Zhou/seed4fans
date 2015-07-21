@@ -11,9 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150617070207) do
+ActiveRecord::Schema.define(version: 20150721103407) do
 
   create_table "dusers", force: true do |t|
+    t.string   "did"
     t.string   "uid"
     t.string   "name"
     t.integer  "c_follower"
@@ -21,11 +22,28 @@ ActiveRecord::Schema.define(version: 20150617070207) do
     t.integer  "c_m_wish"
     t.integer  "c_m_collect"
     t.integer  "c_doulist"
+    t.integer  "c_review"
     t.string   "error"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "c_review"
-    t.string   "did"
+  end
+
+  create_table "movies", force: true do |t|
+    t.string   "title"
+    t.string   "cn_title"
+    t.string   "original_title"
+    t.float    "rating"
+    t.string   "poster_url"
+    t.string   "poster_id"
+    t.string   "subtype"
+    t.string   "pubyear"
+    t.integer  "duration"
+    t.string   "imdb_id"
+    t.string   "summary"
+    t.integer  "e_count"
+    t.integer  "e_duration"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
 end

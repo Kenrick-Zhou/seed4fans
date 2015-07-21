@@ -1,0 +1,27 @@
+<h1>Listing akas</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Movie</th>
+      <th>Aka</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @akas.each do |aka| %>
+      <tr>
+        <td><%= aka.movie_id %></td>
+        <td><%= aka.aka %></td>
+        <td><%= link_to 'Show', aka %></td>
+        <td><%= link_to 'Edit', edit_aka_path(aka) %></td>
+        <td><%= link_to 'Destroy', aka, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Aka', new_aka_path %>

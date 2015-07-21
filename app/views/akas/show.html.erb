@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Movie:</strong>
+  <%= @aka.movie_id %>
+</p>
+
+<p>
+  <strong>Aka:</strong>
+  <%= @aka.aka %>
+</p>
+
+<%= link_to 'Edit', edit_aka_path(@aka) %> |
+<%= link_to 'Back', akas_path %>

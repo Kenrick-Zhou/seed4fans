@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  resources :akas
+
   resources :movies
 
   # root 'dusers#index'
