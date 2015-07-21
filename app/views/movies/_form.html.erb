@@ -1,0 +1,69 @@
+<%= form_for(@movie) do |f| %>
+  <% if @movie.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@movie.errors.count, "error") %> prohibited this movie from being saved:</h2>
+
+      <ul>
+      <% @movie.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :title %><br>
+    <%= f.text_field :title %>
+  </div>
+  <div class="field">
+    <%= f.label :cn_title %><br>
+    <%= f.text_field :cn_title %>
+  </div>
+  <div class="field">
+    <%= f.label :original_title %><br>
+    <%= f.text_field :original_title %>
+  </div>
+  <div class="field">
+    <%= f.label :rating %><br>
+    <%= f.text_field :rating %>
+  </div>
+  <div class="field">
+    <%= f.label :poster_url %><br>
+    <%= f.text_field :poster_url %>
+  </div>
+  <div class="field">
+    <%= f.label :poster_id %><br>
+    <%= f.text_field :poster_id %>
+  </div>
+  <div class="field">
+    <%= f.label :subtype %><br>
+    <%= f.text_field :subtype %>
+  </div>
+  <div class="field">
+    <%= f.label :pubyear %><br>
+    <%= f.text_field :pubyear %>
+  </div>
+  <div class="field">
+    <%= f.label :duration %><br>
+    <%= f.number_field :duration %>
+  </div>
+  <div class="field">
+    <%= f.label :imdb_id %><br>
+    <%= f.text_field :imdb_id %>
+  </div>
+  <div class="field">
+    <%= f.label :summary %><br>
+    <%= f.text_field :summary %>
+  </div>
+  <div class="field">
+    <%= f.label :e_count %><br>
+    <%= f.number_field :e_count %>
+  </div>
+  <div class="field">
+    <%= f.label :e_duration %><br>
+    <%= f.number_field :e_duration %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

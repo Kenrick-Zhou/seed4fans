@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  resources :movies
+
   # root 'dusers#index'
   # get 'dusers/fetch' => 'dusers#fetch'
 

@@ -1,0 +1,31 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  title: MyString
+  cn_title: MyString
+  original_title: MyString
+  rating: 1.5
+  poster_url: MyString
+  poster_id: MyString
+  subtype: MyString
+  pubyear: MyString
+  duration: 1
+  imdb_id: MyString
+  summary: MyString
+  e_count: 1
+  e_duration: 1
+
+two:
+  title: MyString
+  cn_title: MyString
+  original_title: MyString
+  rating: 1.5
+  poster_url: MyString
+  poster_id: MyString
+  subtype: MyString
+  pubyear: MyString
+  duration: 1
+  imdb_id: MyString
+  summary: MyString
+  e_count: 1
+  e_duration: 1
