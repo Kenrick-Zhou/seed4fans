@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150721104142) do
+ActiveRecord::Schema.define(version: 20150721110929) do
 
   create_table "akas", force: true do |t|
     t.integer  "movie_id"
@@ -50,6 +50,14 @@ ActiveRecord::Schema.define(version: 20150721104142) do
     t.datetime "updated_at"
   end
 
+  create_table "movie_types", force: true do |t|
+    t.integer  "movie_id"
+    t.integer  "type_id"
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "movies", force: true do |t|
     t.string   "title"
     t.string   "cn_title"
@@ -64,6 +72,12 @@ ActiveRecord::Schema.define(version: 20150721104142) do
     t.string   "summary"
     t.integer  "e_count"
     t.integer  "e_duration"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "types", force: true do |t|
+    t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

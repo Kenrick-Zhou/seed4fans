@@ -1,0 +1,29 @@
+<h1>Listing movie_types</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Movie</th>
+      <th>Type</th>
+      <th>Name</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @movie_types.each do |movie_type| %>
+      <tr>
+        <td><%= movie_type.movie_id %></td>
+        <td><%= movie_type.type_id %></td>
+        <td><%= movie_type.name %></td>
+        <td><%= link_to 'Show', movie_type %></td>
+        <td><%= link_to 'Edit', edit_movie_type_path(movie_type) %></td>
+        <td><%= link_to 'Destroy', movie_type, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Movie type', new_movie_type_path %>

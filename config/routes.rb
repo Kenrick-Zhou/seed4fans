@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
 
+  resources :movie_types
+
+  resources :types
+
   resources :movie_celebrities
 
   resources :celebrities
