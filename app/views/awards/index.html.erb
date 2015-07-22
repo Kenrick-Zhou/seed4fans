@@ -1,0 +1,29 @@
+<h1>Listing awards</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Movie</th>
+      <th>Name</th>
+      <th>Sub</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @awards.each do |award| %>
+      <tr>
+        <td><%= award.movie_id %></td>
+        <td><%= award.name %></td>
+        <td><%= award.sub %></td>
+        <td><%= link_to 'Show', award %></td>
+        <td><%= link_to 'Edit', edit_award_path(award) %></td>
+        <td><%= link_to 'Destroy', award, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Award', new_award_path %>

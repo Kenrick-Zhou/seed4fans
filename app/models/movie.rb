@@ -17,4 +17,6 @@ class Movie < ActiveRecord::Base
   has_many :tags, :through => :movie_tags
 
   has_many :photos
+
+  has_many :awards
 end

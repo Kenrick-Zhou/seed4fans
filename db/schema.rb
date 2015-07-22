@@ -11,11 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150721113915) do
+ActiveRecord::Schema.define(version: 20150721114328) do
 
   create_table "akas", force: true do |t|
     t.integer  "movie_id"
     t.string   "aka"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "awards", force: true do |t|
+    t.integer  "movie_id"
+    t.string   "name"
+    t.string   "sub"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -108,6 +116,14 @@ ActiveRecord::Schema.define(version: 20150721113915) do
     t.string   "summary"
     t.integer  "e_count"
     t.integer  "e_duration"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "photos", force: true do |t|
+    t.integer  "movie_id"
+    t.string   "pid"
+    t.string   "cdn"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
