@@ -41,6 +41,7 @@ class MoviesController < ApplicationController
           end
           doc = Nokogiri::HTML.parse(page.body, nil, 'utf-8')
           @movie = Movie.new
+          @movie.id = mid
 
 
           puts '########################################'
@@ -114,22 +115,21 @@ class MoviesController < ApplicationController
           @movie.save
 
 
-          # puts '****************************************'
-          # puts '** 又名'
-          # aka = nil
-          #
-          # i = info_text.index('又名:')
-          # puts language = info_text[i+4, info_text.index("\n", i)-i].split('/').collect{|x| x.strip!} if i
-          # # j = info_text.index('IMDb链接:')
-          # # if i
-          # #   if j
-          # #     puts info_text[i+4, j-i-12].split('/').collect{|x| x.strip!}
-          # #   else
-          # #     puts aka = info_text[i+4, info_text.length-i-15].split('/').collect{|x| x.strip!}
-          # #   end
-          # # end
-          #
-          #
+          puts '****************************************'
+          puts '** 又名'
+          i = info_text.index('又名:')
+          akas = info_text[i+4, info_text.index("\n", i)-i].split('/').collect{|x| x.strip!} if i
+          if akas
+            akas.each do |item|
+              puts "又名：#{item}"
+              aka = Aka.new
+              aka.movie_id = mid
+              aka.aka = item
+              aka.save
+            end
+          end
+
+
           # puts '========================================'
           # puts '== 明星 及 明星在该电影中的角色（导演/编辑/主演）'
           # celebrity, movie_celebrity = nil
@@ -300,8 +300,8 @@ class MoviesController < ApplicationController
           break if error_seq > 5
         end
       end
+      puts "fetch movie thread done!"
     end
-    puts "fetch movie thread done!"
   end
 
 
