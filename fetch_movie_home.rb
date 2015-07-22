@@ -2,6 +2,7 @@ require 'nokogiri'
 require 'open-uri'
 require 'mechanize'
 
+error_seq = 0
 
 # begin
   # Fetch and parse HTML document
@@ -13,15 +14,21 @@ require 'mechanize'
   #开卷8分钟# http://movie.douban.com/subject/26292731/
   #风云再起#  http://movie.douban.com/subject/26269551/
   #老千大拍档#http://movie.douban.com/subject/1302840/
-  uri = "http://movie.douban.com/subject/1293172/"
+  #book#     http://book.douban.com/subject/7000005/
+  uri = "http://movie.douban.com/subject/7000005/"
   
-  agent = Mechanize.new
-  page = agent.get(uri, {
-    "User-Agent" => "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/600.6.3 (KHTML, like Gecko) Version/8.0.6 Safari/600.6.3",
-    "Accept" => "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-    "referer" => "http://www.douban.com",
-    "Cookie" => "dbcl2=47460982:uGEqI7WKrho"
-  })
+  
+  begin
+    agent = Mechanize.new
+    page = agent.get(uri, [], URI("http://www.douban.com"), {
+      "User-Agent" => "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/600.6.3 (KHTML, like Gecko) Version/8.0.6 Safari/600.6.3",
+      "Accept" => "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+      "Cookie" => "dbcl2=47460982:uGEqI7WKrho"
+    })
+  rescue Mechanize::ResponseCodeError => e
+    error = "MechanizeError|: " + e.to_s
+    puts error
+  end
   doc = Nokogiri::HTML.parse(page.body, nil, 'utf-8')
   
   # doc = Nokogiri::HTML(open(uri,
