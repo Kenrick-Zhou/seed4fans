@@ -19,4 +19,6 @@ class Movie < ActiveRecord::Base
   has_many :photos
 
   has_many :awards
+
+  has_many :recommendations
 end

@@ -1,0 +1,37 @@
+<%= form_for(@recommendation) do |f| %>
+  <% if @recommendation.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@recommendation.errors.count, "error") %> prohibited this recommendation from being saved:</h2>
+
+      <ul>
+      <% @recommendation.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :movie_id %><br>
+    <%= f.number_field :movie_id %>
+  </div>
+  <div class="field">
+    <%= f.label :rcmd_id %><br>
+    <%= f.number_field :rcmd_id %>
+  </div>
+  <div class="field">
+    <%= f.label :rcmd_name %><br>
+    <%= f.text_field :rcmd_name %>
+  </div>
+  <div class="field">
+    <%= f.label :rcmd_poster_id %><br>
+    <%= f.text_field :rcmd_poster_id %>
+  </div>
+  <div class="field">
+    <%= f.label :rcmd_poster_cdn %><br>
+    <%= f.text_field :rcmd_poster_cdn %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

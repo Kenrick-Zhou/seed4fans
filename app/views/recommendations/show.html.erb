@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Movie:</strong>
+  <%= @recommendation.movie_id %>
+</p>
+
+<p>
+  <strong>Rcmd:</strong>
+  <%= @recommendation.rcmd_id %>
+</p>
+
+<p>
+  <strong>Rcmd name:</strong>
+  <%= @recommendation.rcmd_name %>
+</p>
+
+<p>
+  <strong>Rcmd poster:</strong>
+  <%= @recommendation.rcmd_poster_id %>
+</p>
+
+<p>
+  <strong>Rcmd poster cdn:</strong>
+  <%= @recommendation.rcmd_poster_cdn %>
+</p>
+
+<%= link_to 'Edit', edit_recommendation_path(@recommendation) %> |
+<%= link_to 'Back', recommendations_path %>

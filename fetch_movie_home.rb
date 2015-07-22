@@ -13,7 +13,7 @@ require 'mechanize'
   #开卷8分钟# http://movie.douban.com/subject/26292731/
   #风云再起#  http://movie.douban.com/subject/26269551/
   #老千大拍档#http://movie.douban.com/subject/1302840/
-  uri = "http://movie.douban.com/subject/6873835/"
+  uri = "http://movie.douban.com/subject/1293172/"
   
   agent = Mechanize.new
   page = agent.get(uri, {
