@@ -1,4 +1,7 @@
 class Movie < ActiveRecord::Base
+  paginates_per 25
+  max_paginates_per 200
+
   has_many :akas
 
   has_many :movie_celebrities

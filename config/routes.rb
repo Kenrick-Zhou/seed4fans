@@ -34,15 +34,16 @@ Rails.application.routes.draw do
 
   resources :akas
 
-  resources :movies
+
 
   # root 'dusers#index'
-  # get 'dusers/fetch' => 'dusers#fetch'
+  get 'dusers/fetch' => 'dusers#fetch'
+  get 'movies/fetch' => 'movies#fetch'
 
   root :to => 'welcome#index'
   get 'welcome' => 'welcome#index'
 
-
+  resources :movies
   resources :dusers
 
   # The priority is based upon order of creation: first created -> highest priority.

@@ -1,5 +1,24 @@
 <h1>Listing movies</h1>
 
+<%# link_to 'Let\'s Fetch Movie', controller: "movies", action:"fetch" %>
+
+<br/>
+<h3>Lets fetch movie!</h3>
+<%= form_tag("movies/fetch", method: "get") do %>
+  <%= label_tag(:cookie, "Cookie:") %>
+  <%= text_field_tag(:cookie) %>
+  <br/>
+  <%= label_tag(:start_at, "Start at:") %>
+  <%= text_field_tag(:start_at) %>
+  <br/>
+  <%= label_tag(:end_at, "End at:") %>
+  <%= text_field_tag(:end_at) %>
+  <br/>
+  <%= submit_tag("Fetch!") %>
+<% end %>
+
+<br/>
+
 <table>
   <thead>
     <tr>
@@ -46,4 +65,10 @@
 
 <br>
 
+<div>
+  <%= paginate @movies %>
+</div>
+
+<div>
 <%= link_to 'New Movie', new_movie_path %>
+</div>

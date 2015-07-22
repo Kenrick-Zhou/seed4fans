@@ -15,7 +15,7 @@ begin
   #风云再起#  http://movie.douban.com/subject/26269551/
   #老千大拍档#http://movie.douban.com/subject/1302840/
   #book#     http://book.douban.com/subject/7000005/
-  uri = "http://movie.douban.com/subject/1867744/"
+  uri = "http://movie.douban.com/subject/1293173/"
   
   
   begin

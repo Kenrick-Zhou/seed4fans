@@ -40,3 +40,4 @@ gem 'spring',        group: :development
 
 gem 'nokogiri'
 gem 'kaminari'
+gem 'mechanize'
