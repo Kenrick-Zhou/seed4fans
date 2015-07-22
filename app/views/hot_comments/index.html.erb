@@ -1,0 +1,35 @@
+<h1>Listing hot_comments</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Movie</th>
+      <th>Did</th>
+      <th>Name</th>
+      <th>Rating</th>
+      <th>Pubdate</th>
+      <th>Comment</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @hot_comments.each do |hot_comment| %>
+      <tr>
+        <td><%= hot_comment.movie_id %></td>
+        <td><%= hot_comment.did %></td>
+        <td><%= hot_comment.name %></td>
+        <td><%= hot_comment.rating %></td>
+        <td><%= hot_comment.pubdate %></td>
+        <td><%= hot_comment.comment %></td>
+        <td><%= link_to 'Show', hot_comment %></td>
+        <td><%= link_to 'Edit', edit_hot_comment_path(hot_comment) %></td>
+        <td><%= link_to 'Destroy', hot_comment, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Hot comment', new_hot_comment_path %>

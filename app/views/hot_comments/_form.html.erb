@@ -1,0 +1,41 @@
+<%= form_for(@hot_comment) do |f| %>
+  <% if @hot_comment.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@hot_comment.errors.count, "error") %> prohibited this hot_comment from being saved:</h2>
+
+      <ul>
+      <% @hot_comment.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :movie_id %><br>
+    <%= f.number_field :movie_id %>
+  </div>
+  <div class="field">
+    <%= f.label :did %><br>
+    <%= f.text_field :did %>
+  </div>
+  <div class="field">
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :rating %><br>
+    <%= f.number_field :rating %>
+  </div>
+  <div class="field">
+    <%= f.label :pubdate %><br>
+    <%= f.text_field :pubdate %>
+  </div>
+  <div class="field">
+    <%= f.label :comment %><br>
+    <%= f.text_field :comment %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

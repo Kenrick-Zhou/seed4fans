@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  movie_id: 1
+  did: MyString
+  name: MyString
+  rating: 1
+  pubdate: MyString
+  comment: MyString
+
+two:
+  movie_id: 1
+  did: MyString
+  name: MyString
+  rating: 1
+  pubdate: MyString
+  comment: MyString

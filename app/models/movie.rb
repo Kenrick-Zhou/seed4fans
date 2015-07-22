@@ -23,4 +23,7 @@ class Movie < ActiveRecord::Base
   has_many :recommendations
 
   has_many :doulist
+
+  has_many :hot_comments
+  has_many :new_comments
 end

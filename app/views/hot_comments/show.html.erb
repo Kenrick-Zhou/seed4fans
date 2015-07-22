@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Movie:</strong>
+  <%= @hot_comment.movie_id %>
+</p>
+
+<p>
+  <strong>Did:</strong>
+  <%= @hot_comment.did %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @hot_comment.name %>
+</p>
+
+<p>
+  <strong>Rating:</strong>
+  <%= @hot_comment.rating %>
+</p>
+
+<p>
+  <strong>Pubdate:</strong>
+  <%= @hot_comment.pubdate %>
+</p>
+
+<p>
+  <strong>Comment:</strong>
+  <%= @hot_comment.comment %>
+</p>
+
+<%= link_to 'Edit', edit_hot_comment_path(@hot_comment) %> |
+<%= link_to 'Back', hot_comments_path %>

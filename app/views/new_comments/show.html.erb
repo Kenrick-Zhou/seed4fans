@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Movie:</strong>
+  <%= @new_comment.movie_id %>
+</p>
+
+<p>
+  <strong>Did:</strong>
+  <%= @new_comment.did %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @new_comment.name %>
+</p>
+
+<p>
+  <strong>Rating:</strong>
+  <%= @new_comment.rating %>
+</p>
+
+<p>
+  <strong>Pubdate:</strong>
+  <%= @new_comment.pubdate %>
+</p>
+
+<p>
+  <strong>Comment:</strong>
+  <%= @new_comment.comment %>
+</p>
+
+<%= link_to 'Edit', edit_new_comment_path(@new_comment) %> |
+<%= link_to 'Back', new_comments_path %>

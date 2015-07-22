@@ -1,0 +1,35 @@
+<h1>Listing new_comments</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Movie</th>
+      <th>Did</th>
+      <th>Name</th>
+      <th>Rating</th>
+      <th>Pubdate</th>
+      <th>Comment</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @new_comments.each do |new_comment| %>
+      <tr>
+        <td><%= new_comment.movie_id %></td>
+        <td><%= new_comment.did %></td>
+        <td><%= new_comment.name %></td>
+        <td><%= new_comment.rating %></td>
+        <td><%= new_comment.pubdate %></td>
+        <td><%= new_comment.comment %></td>
+        <td><%= link_to 'Show', new_comment %></td>
+        <td><%= link_to 'Edit', edit_new_comment_path(new_comment) %></td>
+        <td><%= link_to 'Destroy', new_comment, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New New comment', new_new_comment_path %>

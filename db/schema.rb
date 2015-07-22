@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150722030914) do
+ActiveRecord::Schema.define(version: 20150722033023) do
 
   create_table "akas", force: true do |t|
     t.integer  "movie_id"
@@ -60,6 +60,17 @@ ActiveRecord::Schema.define(version: 20150722030914) do
     t.integer  "c_doulist"
     t.integer  "c_review"
     t.string   "error"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "hot_comments", force: true do |t|
+    t.integer  "movie_id"
+    t.string   "did"
+    t.string   "name"
+    t.integer  "rating"
+    t.string   "pubdate"
+    t.string   "comment"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -125,6 +136,17 @@ ActiveRecord::Schema.define(version: 20150722030914) do
     t.string   "summary"
     t.integer  "e_count"
     t.integer  "e_duration"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "new_comments", force: true do |t|
+    t.integer  "movie_id"
+    t.string   "did"
+    t.string   "name"
+    t.integer  "rating"
+    t.string   "pubdate"
+    t.string   "comment"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

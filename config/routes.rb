@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
 
+  resources :new_comments
+
+  resources :hot_comments
+
   resources :doulists
 
   resources :recommendations
