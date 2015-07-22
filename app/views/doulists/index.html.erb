@@ -1,0 +1,31 @@
+<h1>Listing doulists</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Movie</th>
+      <th>Name</th>
+      <th>Dlist</th>
+      <th>Uname</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @doulists.each do |doulist| %>
+      <tr>
+        <td><%= doulist.movie_id %></td>
+        <td><%= doulist.name %></td>
+        <td><%= doulist.dlist_id %></td>
+        <td><%= doulist.uname %></td>
+        <td><%= link_to 'Show', doulist %></td>
+        <td><%= link_to 'Edit', edit_doulist_path(doulist) %></td>
+        <td><%= link_to 'Destroy', doulist, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Doulist', new_doulist_path %>

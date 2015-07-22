@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  resources :doulists
+
   resources :recommendations
 
   resources :awards

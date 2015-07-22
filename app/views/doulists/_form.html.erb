@@ -1,0 +1,33 @@
+<%= form_for(@doulist) do |f| %>
+  <% if @doulist.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@doulist.errors.count, "error") %> prohibited this doulist from being saved:</h2>
+
+      <ul>
+      <% @doulist.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :movie_id %><br>
+    <%= f.number_field :movie_id %>
+  </div>
+  <div class="field">
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :dlist_id %><br>
+    <%= f.number_field :dlist_id %>
+  </div>
+  <div class="field">
+    <%= f.label :uname %><br>
+    <%= f.text_field :uname %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

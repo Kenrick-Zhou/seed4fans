@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Movie:</strong>
+  <%= @doulist.movie_id %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @doulist.name %>
+</p>
+
+<p>
+  <strong>Dlist:</strong>
+  <%= @doulist.dlist_id %>
+</p>
+
+<p>
+  <strong>Uname:</strong>
+  <%= @doulist.uname %>
+</p>
+
+<%= link_to 'Edit', edit_doulist_path(@doulist) %> |
+<%= link_to 'Back', doulists_path %>

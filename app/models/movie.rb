@@ -21,4 +21,6 @@ class Movie < ActiveRecord::Base
   has_many :awards
 
   has_many :recommendations
+
+  has_many :doulist
 end
