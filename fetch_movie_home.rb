@@ -4,7 +4,7 @@ require 'mechanize'
 
 error_seq = 0
 
-# begin
+begin
   # Fetch and parse HTML document
   #末代皇帝#  http://movie.douban.com/subject/1293172/
   #机器人9号# http://movie.douban.com/subject/1764796/
@@ -15,7 +15,7 @@ error_seq = 0
   #风云再起#  http://movie.douban.com/subject/26269551/
   #老千大拍档#http://movie.douban.com/subject/1302840/
   #book#     http://book.douban.com/subject/7000005/
-  uri = "http://movie.douban.com/subject/7000005/"
+  uri = "http://movie.douban.com/subject/1867744/"
   
   
   begin
@@ -47,7 +47,8 @@ error_seq = 0
   # puts cn_title = tmp[0, tmp.index('的剧情简介')]
   tmp = doc.at_css('div#comments-section h2 i').content
   puts cn_title = tmp[0, tmp.index('的短评')]
-  
+  puts title = doc.at_css('div#content h1 span').content
+  puts original_title = title[cn_title.length + 1 .. -1]
   
   puts pubyear = doc.at_css('div#content h1 span.year').content[1..-2] unless doc.at_css('div#content h1 span.year').nil?
   # puts tmp
@@ -269,18 +270,16 @@ error_seq = 0
   end
   
   
-  
-  
-# rescue OpenURI::HTTPError => e
-#   error_seq += 1 if e.to_s.include?("redirection forbidden")
-#   error = "HTTPError|: " + e.to_s
-#   puts error
-# rescue NameError => e
-#   error_seq += 1 if e.to_s.include?("redirection forbidden")
-#   error = "NameError|: " + e.to_s
-#   puts error
-# rescue StandardError => bang
-#   error_seq += 1 if bang.to_s.include?("redirection forbidden")
-#   error = "StandardError|: " + bang.to_s
-#   puts error
-# end
+rescue OpenURI::HTTPError => e
+  error_seq += 1 if e.to_s.include?("redirection forbidden")
+  error = "HTTPError|: " + e.to_s
+  puts error
+rescue NameError => e
+  error_seq += 1 if e.to_s.include?("redirection forbidden")
+  error = "NameError|: " + e.to_s
+  puts error
+rescue StandardError => bang
+  error_seq += 1 if bang.to_s.include?("redirection forbidden")
+  error = "StandardError|: " + bang.to_s
+  puts error
+end
