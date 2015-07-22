@@ -19,6 +19,7 @@ class MoviesController < ApplicationController
 
 
   def fetch
+    Celebrity.create_with(name: 'nobody').find_or_create_by(id: 0)
     cookie = params[:cookie]
     start_id = params[:start_at].to_i
     end_id = params[:end_at].to_i
@@ -40,9 +41,6 @@ class MoviesController < ApplicationController
             next
           end
           doc = Nokogiri::HTML.parse(page.body, nil, 'utf-8')
-          @movie = Movie.new
-          @movie.id = mid
-
 
           puts '########################################'
           puts '## 各种名称、年代'
@@ -52,12 +50,7 @@ class MoviesController < ApplicationController
           puts title = doc.at_css('div#content h1 span').content
           puts original_title = title[cn_title.length + 1 .. -1]
           puts pubyear = doc.at_css('div#content h1 span.year').content[1..-2] unless doc.at_css('div#content h1 span.year').nil?
-          @movie.title = title
-          @movie.cn_title = cn_title
-          @movie.original_title = original_title
-          @movie.pubyear = pubyear
-          @movie.save
-
+          movie = Movie.create(id: mid, title: title, cn_title: cn_title, original_title: original_title, pubyear: pubyear)
 
 
           puts '########################################'
@@ -69,7 +62,6 @@ class MoviesController < ApplicationController
 
           puts poster_url = doc.at_css('div#mainpic a img').attr('src')
           puts poster_id = poster_url.split('/')[-1].split('.')[0]
-
           puts rating = doc.at_css('div#interest_sectl p.rating_self strong.rating_num').content
 
           subtype = 'movie'
@@ -103,16 +95,18 @@ class MoviesController < ApplicationController
               puts summary = summary[0..-5]
             end
           end
-          @movie.poster_url = poster_url
-          @movie.poster_id = poster_id
-          @movie.rating = rating
-          @movie.subtype = subtype
-          @movie.duration = duration
-          @movie.imdb_id = imdb_id
-          @movie.summary = summary
-          @movie.e_duration = e_duration
-          @movie.e_count = e_count
-          @movie.save
+          movie.update(
+              poster_url: poster_url,
+              poster_id: poster_id,
+              rating: rating,
+              subtype: subtype,
+              duration: duration,
+              imdb_id: imdb_id,
+              summary: summary,
+              e_duration: e_duration,
+              e_count: e_count
+          )
+
 
 
           puts '****************************************'
@@ -122,32 +116,34 @@ class MoviesController < ApplicationController
           if akas
             akas.each do |item|
               puts "又名：#{item}"
-              aka = Aka.new
-              aka.movie_id = mid
-              aka.aka = item
-              aka.save
+              Aka.create(movie_id: mid, aka: item)
             end
           end
 
 
-          # puts '========================================'
-          # puts '== 明星 及 明星在该电影中的角色（导演/编辑/主演）'
-          # celebrity, movie_celebrity = nil
-          #
-          # doc.css('div#info > span').each do |span0|
-          #   if span0.css('span').size == 2 && span0.css('span')[0].content =~ /导演|编剧|主演/
-          #     puts span0.css('span')[0].content + ":"
-          #     span0.css('span')[1].css('a').each do |a|
-          #       if a.attr('href').start_with?("/celebrity/")
-          #         puts a.content + '(' + a.attr('href').split('/')[2] + ')'
-          #       else
-          #         puts a.content
-          #       end
-          #     end
-          #   end
-          # end
-          #
-          #
+          puts '========================================'
+          puts '== 明星 及 明星在该电影中的角色（导演/编辑/主演）'
+
+          doc.css('div#info > span').each do |span|
+            if span.css('span').size == 2 && span.css('span')[0].content =~ /导演|编剧|主演/
+              role = span.css('span')[0].content
+              puts role + ":"
+              span.css('span')[1].css('a').each do |a|
+                name = a.content
+                if a.attr('href').start_with?("/celebrity/")
+                  celebrity_id = a.attr('href').split('/')[2]
+                  puts "#{name}(#{celebrity_id})"
+                  celebrity = Celebrity.create_with(name: name).find_or_create_by(id: celebrity_id)
+                  MovieCelebrity.create(movie_id: mid, celebrity_id: celebrity_id, name: name, role: role)
+                else
+                  puts name
+                  MovieCelebrity.create(movie_id: mid, celebrity_id: 0, name: name, role: role)
+                end
+              end
+            end
+          end
+
+
           # puts '========================================'
           # puts '== 类型'
           # type, movie_type = nil
