@@ -107,7 +107,13 @@ begin
   aka = nil
   
   i = info_text.index('又名:')
-  puts language = info_text[i+4, info_text.index("\n", i)-i].split('/').collect{|x| x.strip!} if i
+  # puts aka = info_text[i+4, info_text.index("\n", i)-i].split('/').collect{|x| x.strip!} if i
+  aka = info_text[i+4, info_text.index("\n", i)-i].split('/').collect{|x| x.strip!} if i
+  if aka
+    aka.each do |a|
+      puts "又名：#{a}"
+    end
+  end
   # j = info_text.index('IMDb链接:')
   # if i
   #   if j
