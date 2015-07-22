@@ -123,7 +123,6 @@ class MoviesController < ApplicationController
 
           puts '========================================'
           puts '== 明星 及 明星在该电影中的角色（导演/编辑/主演）'
-
           doc.css('div#info > span').each do |span|
             if span.css('span').size == 2 && span.css('span')[0].content =~ /导演|编剧|主演/
               role = span.css('span')[0].content
@@ -144,53 +143,39 @@ class MoviesController < ApplicationController
           end
 
 
-          # puts '========================================'
-          # puts '== 类型'
-          # type, movie_type = nil
-          #
-          # doc.css('div#info span').each do |span|
-          #   puts span.content if span.attr('property') == 'v:genre'
-          # end
-          #
-          #
-          # puts '========================================'
-          # puts '== 国家/地区、语言'
-          # country, movie_country, language, movie = nil
-          #
-          # i = info_text.index('制片国家/地区:')
-          # j = info_text.index('语言:')
-          #
-          # puts country = info_text[i+9, info_text.index("\n", i)-i].split('/').collect{|x| x.strip!} if i
-          # puts language = info_text[j+4, info_text.index("\n", j)-j].split('/').collect{|x| x.strip!} if j
-          #
-          # # if i
-          # #   if j
-          # #     puts info_text[i+9, j-i-17].split('/').collect{|x| x.strip!}
-          # #   else
-          # #     puts country = info_text[i+4, info_text.length-i-15].split('/').collect{|x| x.strip!}
-          # #   end
-          # #   k = subtype == 'tv' ? info_text.index('首播:') : info_text.index('上映日期:')
-          # #   puts '⬆️国家⬆️  ⬇️语言⬇️'
-          # #   # puts j
-          # #   # puts k = info_text.index("\n", j)
-          # #   puts language = info_text[j+4, info_text.index("\n", j)-j].split('/').collect{|x| x.strip!}
-          # #   # if k
-          # #   #   puts info_text[j+4, k-j-12].split(' / ')
-          # #   # else
-          # #   #   puts language = info_text[j+4, info_text.length-k-15].split(' / ').collect{|x| x.strip!}
-          # #   # end
-          # # end
-          #
-          #
-          # puts '========================================'
-          # puts '== 常用标签'
-          # tag, movie_tag = nil
-          #
-          # doc.css('div.tags-body a').each do |a|
-          #   puts tag = a.content
-          # end
-          #
-          #
+          puts '========================================'
+          puts '== 类型'
+          doc.css('div#info span').each do |span|
+            puts type = span.content if span.attr('property') == 'v:genre'
+            type = Type.find_or_create_by(name: type)
+            MovieType.create(movie_id: mid, type_id: type.id, name: type.id)
+          end
+
+
+          puts '========================================'
+          puts '== 国家/地区、语言'
+          info_text[i+9, info_text.index("\n", i)-i].split('/').collect{|x| x.strip!}.each do |country|
+            puts country
+            country = Country.find_or_create_by(name: country)
+            MovieCountry.create(movie_id: mid, country_id: country.id, name: country.name)
+          end if info_text.index('制片国家/地区:')
+
+          info_text[j+4, info_text.index("\n", j)-j].split('/').collect{|x| x.strip!}.each do |language|
+            puts language
+            language = Language.find_or_create_by(name: language)
+            MovieLanguage.create(movie_id: mid, language_id: language.id, name: language.name)
+          end if info_text.index('语言:')
+
+
+          puts '========================================'
+          puts '== 常用标签'
+          doc.css('div.tags-body a').each do |a|
+            puts tag = a.content
+            tag = Tag.find_or_create_by(name: tag)
+            MovieTag.create(movie_id: mid, tig_id: tag.id, name: tag.name)
+          end
+
+
           # puts '****************************************'
           # puts '** 照片'
           # photo = nil
