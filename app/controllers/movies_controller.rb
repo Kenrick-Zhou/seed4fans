@@ -176,55 +176,51 @@ class MoviesController < ApplicationController
           end
 
 
-          # puts '****************************************'
-          # puts '** 照片'
-          # photo = nil
-          #
-          # doc.css('div#related-pic img').each do |img|
-          #   if img.attr('alt') == '图片'
-          #     puts /public\/(.*).jpg/.match(img.attr('src'))[1]
-          #     puts /\/\/(.*)\.douban\.com/.match(img.attr('src'))[1]
-          #   end
-          # end
-          #
-          #
-          # puts '****************************************'
-          # puts '** 获奖简况'
-          # award = nil
-          #
-          # doc.css('div.mod ul.award').each do |ul|
-          #   puts ul.css('li')[0].content
-          #   puts ul.css('li')[1].content
-          #   puts '---------'
-          # end
-          #
-          #
-          # puts '****************************************'
-          # puts '** 推荐（喜欢这部电影的人也喜欢）'
-          # recommendation = nil
-          #
-          # doc.css('div#recommendations dl').each do |dl|
-          #   puts /subject\/(\d*)/.match(dl.at_css('dt a').attr('href'))[1]
-          #   mc = /public\/(.*).jpg|mpic\/(.*).jpg/.match(dl.at_css('dt a img').attr('src'))
-          #   puts mc[1].nil? ? mc[2] : mc[1]
-          #   # puts /public\/(.*).jpg|mpic\/(.*).jpg/.match(dl.at_css('dt a img').attr('src'))[1]
-          #   puts /\/\/(.*)\.douban\.com/.match(dl.at_css('dt a img').attr('src'))[1]
-          #   puts dl.at_css('dd a').content
-          #   puts '----------'
-          # end
-          #
-          #
-          # puts '****************************************'
-          # puts '** 豆列（以下豆列推荐）'
-          # doulist = nil
-          #
-          # doc.css('div#subject-doulist li').each do |li|
-          #   puts li.at_css('a').content
-          #   puts li.at_css('a').attr('href').split('/')[-1]
-          #   puts li.at_css('span').content[1..-2]
-          # end
-          #
-          #
+          puts '****************************************'
+          puts '** 照片'
+          doc.css('div#related-pic img').each do |img|
+            if img.attr('alt') == '图片'
+              puts pid = /public\/(.*).jpg/.match(img.attr('src'))[1]
+              puts cdn = /\/\/(.*)\.douban\.com/.match(img.attr('src'))[1]
+              Photo.create(movie_id: mid, pid: pid)
+            end
+          end
+
+
+          puts '****************************************'
+          puts '** 获奖简况'
+          doc.css('div.mod ul.award').each do |ul|
+            puts name = ul.css('li')[0].content
+            puts sub = ul.css('li')[1].content
+            Award.create(movie_id: mid, name: name, sub: sub)
+            puts '---------'
+          end
+
+
+          puts '****************************************'
+          puts '** 推荐（喜欢这部电影的人也喜欢）'
+          doc.css('div#recommendations dl').each do |dl|
+            puts rcmd_id = /subject\/(\d*)/.match(dl.at_css('dt a').attr('href'))[1]
+            mc = /public\/(.*).jpg|mpic\/(.*).jpg/.match(dl.at_css('dt a img').attr('src'))
+            puts rcmd_poster_id = mc[1].nil? ? mc[2] : mc[1]
+            puts rcmd_poster_cdn = /\/\/(.*)\.douban\.com/.match(dl.at_css('dt a img').attr('src'))[1]
+            puts rcmd_name = dl.at_css('dd a').content
+            Recommendation.create(movie_id: mid, rcmd_id: rcmd_id, rcmd_name: rcmd_name, rcmd_poster_id: rcmd_poster_id, rcmd_poster_cdn: rcmd_poster_cdn)
+            puts '----------'
+          end
+
+
+
+          puts '****************************************'
+          puts '** 豆列（以下豆列推荐）'
+          doc.css('div#subject-doulist li').each do |li|
+            puts name = li.at_css('a').content
+            puts dlist_id = li.at_css('a').attr('href').split('/')[-1]
+            puts uname = li.at_css('span').content[1..-2]
+            Doulist.create(movie_id: mid, name: name, dlist_id: dlist_id, uname: uname)
+          end
+
+
           # puts '****************************************'
           # puts '** 热门评论'
           # hot_comment = nil
