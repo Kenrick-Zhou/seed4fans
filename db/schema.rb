@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150722033023) do
+ActiveRecord::Schema.define(version: 20150723035148) do
 
   create_table "akas", force: true do |t|
     t.integer  "movie_id"
@@ -68,7 +68,7 @@ ActiveRecord::Schema.define(version: 20150722033023) do
     t.integer  "movie_id"
     t.string   "did"
     t.string   "name"
-    t.integer  "rating"
+    t.string   "rating",     limit: 2
     t.string   "pubdate"
     t.string   "comment"
     t.datetime "created_at"
@@ -144,7 +144,7 @@ ActiveRecord::Schema.define(version: 20150722033023) do
     t.integer  "movie_id"
     t.string   "did"
     t.string   "name"
-    t.integer  "rating"
+    t.string   "rating",     limit: 2
     t.string   "pubdate"
     t.string   "comment"
     t.datetime "created_at"

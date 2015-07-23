@@ -221,42 +221,42 @@ class MoviesController < ApplicationController
           end
 
 
-          # puts '****************************************'
-          # puts '** 热门评论'
-          # hot_comment = nil
-          #
-          # doc.css('div#hot-comments div.comment-item div.comment').each do |div|
-          #   puts div.at_css('h3 span.comment-info a').attr('href').split('/')[-1]
-          #   puts div.at_css('h3 span.comment-info a').content
-          #   #很差、较差、还行、推荐、力荐
-          #   puts div.at_css('h3 span.comment-info span.rating').attr('title') unless div.at_css('h3 span.comment-info span.rating').nil?
-          #   # puts div.at_css('h3 span.comment-info span.rating').attr('title')#很差、较差、还行、推荐、力荐
-          #   puts div.css('h3 span.comment-info span')[-1].content.strip
-          #   puts div.at_css('p').content.strip
-          #   puts '-------'
-          # end
-          #
-          #
-          # puts '****************************************'
-          # puts '** 最新评论'
-          # new_comment = nil
-          #
-          # if page.links_with(:text => '最新').size != 0
-          #   page = page.links_with(:text => '最新')[-1].click
-          #   doc = Nokogiri::HTML.parse(page.body, nil, 'utf-8')
-          #
-          #   # doc.css('div#new-comments div.comment-item div.comment').each do |div|
-          #   doc.css('div#comments div.comment-item div.comment').each do |div|
-          #     puts div.at_css('h3 span.comment-info a').attr('href').split('/')[-1]
-          #     puts div.at_css('h3 span.comment-info a').content
-          #     #很差、较差、还行、推荐、力荐
-          #     puts div.at_css('h3 span.comment-info span.rating').attr('title') unless div.at_css('h3 span.comment-info span.rating').nil?
-          #     # puts div.at_css('h3 span.comment-info span.rating').attr('title')#很差、较差、还行、推荐、力荐
-          #     puts div.css('h3 span.comment-info span')[-1].content.strip
-          #     puts div.at_css('p').content.strip
-          #     puts '-------'
-          #   end
-          # end
+          puts '****************************************'
+          puts '** 热门评论'
+          doc.css('div#hot-comments div.comment-item div.comment').each do |div|
+            puts did = div.at_css('h3 span.comment-info a').attr('href').split('/')[-1]
+            puts name = div.at_css('h3 span.comment-info a').content
+            #很差、较差、还行、推荐、力荐
+            puts rating = div.at_css('h3 span.comment-info span.rating').attr('title') unless div.at_css('h3 span.comment-info span.rating').nil?
+            # puts div.at_css('h3 span.comment-info span.rating').attr('title')#很差、较差、还行、推荐、力荐
+            puts pubdate = div.css('h3 span.comment-info span')[-1].content.strip
+            puts comment = div.at_css('p').content.strip
+            HotComment.create(movie_id: mid, did: did, rating: rating, pubdate: pubdate, comment: comment)
+            puts '-------'
+          end
+
+
+          puts '****************************************'
+          puts '** 最新评论'
+          new_comment = nil
+
+          if page.links_with(:text => '最新').size != 0
+            page = page.links_with(:text => '最新')[-1].click
+            doc = Nokogiri::HTML.parse(page.body, nil, 'utf-8')
+
+            # doc.css('div#new-comments div.comment-item div.comment').each do |div|
+            doc.css('div#comments div.comment-item div.comment').each do |div|
+              puts did = div.at_css('h3 span.comment-info a').attr('href').split('/')[-1]
+              puts name = div.at_css('h3 span.comment-info a').content
+              #很差、较差、还行、推荐、力荐
+              puts rating = div.at_css('h3 span.comment-info span.rating').attr('title') unless div.at_css('h3 span.comment-info span.rating').nil?
+              # puts div.at_css('h3 span.comment-info span.rating').attr('title')#很差、较差、还行、推荐、力荐
+              puts pubdate = div.css('h3 span.comment-info span')[-1].content.strip
+              puts comment = div.at_css('p').content.strip
+              NewComment.create(movie_id: mid, did: did, rating: rating, pubdate: pubdate, comment: comment)
+              puts '-------'
+            end
+          end
 
 
         rescue OpenURI::HTTPError => e
