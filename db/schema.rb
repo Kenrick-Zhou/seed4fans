@@ -50,7 +50,6 @@ ActiveRecord::Schema.define(version: 20150723035148) do
   end
 
   create_table "dusers", force: true do |t|
-    t.string   "did"
     t.string   "uid"
     t.string   "name"
     t.integer  "c_follower"
@@ -58,10 +57,11 @@ ActiveRecord::Schema.define(version: 20150723035148) do
     t.integer  "c_m_wish"
     t.integer  "c_m_collect"
     t.integer  "c_doulist"
-    t.integer  "c_review"
     t.string   "error"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "c_review"
+    t.string   "did"
   end
 
   create_table "hot_comments", force: true do |t|

@@ -154,12 +154,14 @@ class MoviesController < ApplicationController
 
           puts '========================================'
           puts '== 国家/地区、语言'
+          i = info_text.index('制片国家/地区:')
           info_text[i+9, info_text.index("\n", i)-i].split('/').collect{|x| x.strip!}.each do |country|
             puts country
             country = Country.find_or_create_by(name: country)
             MovieCountry.create(movie_id: mid, country_id: country.id, name: country.name)
           end if info_text.index('制片国家/地区:')
 
+          j = info_text.index('语言:')
           info_text[j+4, info_text.index("\n", j)-j].split('/').collect{|x| x.strip!}.each do |language|
             puts language
             language = Language.find_or_create_by(name: language)
@@ -172,7 +174,7 @@ class MoviesController < ApplicationController
           doc.css('div.tags-body a').each do |a|
             puts tag = a.content
             tag = Tag.find_or_create_by(name: tag)
-            MovieTag.create(movie_id: mid, tig_id: tag.id, name: tag.name)
+            MovieTag.create(movie_id: mid, tag_id: tag.id, name: tag.name)
           end
 
 
