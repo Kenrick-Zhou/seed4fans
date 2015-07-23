@@ -37,6 +37,7 @@ class MoviesController < ApplicationController
                                     "Cookie" => "dbcl2=#{cookie}"
                                 })
           rescue Mechanize::ResponseCodeError => e
+            error_seq += 1 if e.to_s.include?("403")
             puts  "MechanizeError|: #{e.to_s}"
             next
           end
@@ -262,15 +263,15 @@ class MoviesController < ApplicationController
 
 
         rescue OpenURI::HTTPError => e
-          error_seq += 1 if e.to_s.include?("redirection forbidden")
+          error_seq += 1 if e.to_s.include?("redirection forbidden") || e.to_s.include?("403")
           error = "HTTPError|: " + e.to_s
           puts error
         rescue NameError => e
-          error_seq += 1 if e.to_s.include?("redirection forbidden")
+          error_seq += 1 if e.to_s.include?("redirection forbidden") || e.to_s.include?("403")
           error = "NameError|: " + e.to_s
           puts error
         rescue StandardError => bang
-          error_seq += 1 if bang.to_s.include?("redirection forbidden")
+          error_seq += 1 if bang.to_s.include?("redirection forbidden") || e.to_s.include?("403")
           error = "StandardError|: " + bang.to_s
           puts error
         ensure
