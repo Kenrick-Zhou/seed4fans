@@ -34,7 +34,7 @@ class MoviesController < ApplicationController
             page = agent.get(uri, [], URI("http://www.douban.com"), {
                                     "User-Agent" => "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/600.6.3 (KHTML, like Gecko) Version/8.0.6 Safari/600.6.3",
                                     "Accept" => "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-                                    "Cookie" => "dbcl2=47460982:#{cookie}"
+                                    "Cookie" => "dbcl2=#{cookie}"
                                 })
           rescue Mechanize::ResponseCodeError => e
             puts  "MechanizeError|: #{e.to_s}"
