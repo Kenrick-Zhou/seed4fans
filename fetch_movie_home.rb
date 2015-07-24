@@ -15,7 +15,8 @@ begin
   #风云再起#  http://movie.douban.com/subject/26269551/
   #老千大拍档#http://movie.douban.com/subject/1302840/
   #book#     http://book.douban.com/subject/7000005/
-  uri = "http://movie.douban.com/subject/1293172/"
+  #庄子试妻#  http://movie.douban.com/subject/2000001/
+  uri = "http://movie.douban.com/subject/2004004/"
   
   
   begin
@@ -77,7 +78,10 @@ begin
   puts subtype
   
   if subtype == 'tv'
-    puts e_duration = /(\d+)/.match(/(\s\d+分钟)/.match(info_text)[0])[0]
+    unless /(\s\d+分钟)/.match(info_text).nil?
+      puts e_duration = /(\d+)/.match(/(\s\d+分钟)/.match(info_text)[0])[0]
+    end
+    # puts e_duration = /(\d+)/.match(/(\s\d+分钟)/.match(info_text)[0])[0]
     i = info_text.index('集数')
     # j = info_text.index('单集片长')
     puts e_count = info_text[i+4,info_text.index("\n", i)-i].strip if i #and j
