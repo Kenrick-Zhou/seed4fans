@@ -73,7 +73,9 @@ class MoviesController < ApplicationController
           puts subtype
 
           if subtype == 'tv'
-            puts e_duration = /(\d+)/.match(/(\s\d+分钟)/.match(info_text)[0])[0]
+            unless /(\s\d+分钟)/.match(info_text).nil?
+              puts e_duration = /(\d+)/.match(/(\s\d+分钟)/.match(info_text)[0])[0]
+            end
             i = info_text.index('集数')
             # j = info_text.index('单集片长')
             puts e_count = info_text[i+4,info_text.index("\n", i)-i].strip if i #and j
