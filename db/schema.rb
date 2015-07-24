@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150723035148) do
+ActiveRecord::Schema.define(version: 20150724080514) do
 
   create_table "akas", force: true do |t|
     t.integer  "movie_id"
@@ -133,7 +133,7 @@ ActiveRecord::Schema.define(version: 20150723035148) do
     t.string   "pubyear"
     t.integer  "duration"
     t.string   "imdb_id"
-    t.string   "summary"
+    t.string   "summary",        limit: 1000
     t.integer  "e_count"
     t.integer  "e_duration"
     t.datetime "created_at"

@@ -52,7 +52,7 @@ class MoviesController < ApplicationController
           puts title = doc.at_css('div#content h1 span').content
           puts original_title = title[cn_title.length + 1 .. -1]
           puts pubyear = doc.at_css('div#content h1 span.year').content[1..-2] unless doc.at_css('div#content h1 span.year').nil?
-          movie = Movie.create(id: mid, title: title, cn_title: cn_title, original_title: original_title, pubyear: pubyear)
+          movie = Movie.create_with(title: title, cn_title: cn_title, original_title: original_title, pubyear: pubyear).find_or_create_by(id: mid)
 
 
           puts '########################################'
@@ -275,7 +275,7 @@ class MoviesController < ApplicationController
               summary: summary,
               e_duration: e_duration,
               e_count: e_count
-          )
+          ) unless movie.nil?
           puts "——————oOo——————"
           sleep 2
           break if error_seq > 5

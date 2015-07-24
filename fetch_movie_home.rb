@@ -16,7 +16,7 @@ begin
   #老千大拍档#http://movie.douban.com/subject/1302840/
   #book#     http://book.douban.com/subject/7000005/
   #庄子试妻#  http://movie.douban.com/subject/2000001/
-  uri = "http://movie.douban.com/subject/4002115/"
+  uri = "http://movie.douban.com/subject/2000001/"
   
   
   begin
