@@ -26,6 +26,8 @@ class MoviesController < ApplicationController
     error_seq = 0
     Thread.new do
       start_id.upto(end_id) do |mid|
+        movie, title, cn_title, original_title, pubyear = nil
+        poster_url, poster_id, rating, subtype, duration, imdb_id, summary, e_duration, e_count = nil
         begin
           uri = "http://movie.douban.com/subject/#{mid}/"
           puts "→→→ start to fetch id:#{mid}"
@@ -45,7 +47,6 @@ class MoviesController < ApplicationController
 
           puts '########################################'
           puts '## 各种名称、年代'
-          title, cn_title, original_title, pubyear = nil
           tmp = doc.at_css('div#comments-section h2 i').content
           puts cn_title = tmp[0, tmp.index('的短评')]
           puts title = doc.at_css('div#content h1 span').content
@@ -56,7 +57,6 @@ class MoviesController < ApplicationController
 
           puts '########################################'
           puts '## 海报、评分、类型（电影/TV）、片长（单集片长 if tv）、IMDb、简介'
-          poster_url, poster_id, rating, subtype, duration, imdb_id, summary, e_duration, e_count = nil
           puts '==============================='
           puts info_text = doc.at_css('div#info').inner_text
           puts '==============================='
@@ -98,18 +98,6 @@ class MoviesController < ApplicationController
               puts summary = summary[0..-5]
             end
           end
-          movie.update(
-              poster_url: poster_url,
-              poster_id: poster_id,
-              rating: rating,
-              subtype: subtype,
-              duration: duration,
-              imdb_id: imdb_id,
-              summary: summary,
-              e_duration: e_duration,
-              e_count: e_count
-          )
-
 
 
           puts '****************************************'
@@ -206,9 +194,9 @@ class MoviesController < ApplicationController
           puts '** 推荐（喜欢这部电影的人也喜欢）'
           doc.css('div#recommendations dl').each do |dl|
             puts rcmd_id = /subject\/(\d*)/.match(dl.at_css('dt a').attr('href'))[1]
-            mc = /public\/(.*).jpg|mpic\/(.*).jpg/.match(dl.at_css('dt a img').attr('src'))
-            puts rcmd_poster_id = mc[1].nil? ? mc[2] : mc[1]
-            puts rcmd_poster_cdn = /\/\/(.*)\.douban\.com/.match(dl.at_css('dt a img').attr('src'))[1]
+            src = dl.at_css('dt a img').attr('src')
+            puts rcmd_poster_id = src.split('/')[-1].split('.')[0]
+            puts rcmd_poster_cdn = /\/\/(.*)\.douban\.com/.match(src)[1]
             puts rcmd_name = dl.at_css('dd a').content
             Recommendation.create(movie_id: mid, rcmd_id: rcmd_id, rcmd_name: rcmd_name, rcmd_poster_id: rcmd_poster_id, rcmd_poster_cdn: rcmd_poster_cdn)
             puts '----------'
@@ -277,6 +265,17 @@ class MoviesController < ApplicationController
           error = "StandardError|: " + bang.to_s
           puts error
         ensure
+          movie.update(
+              poster_url: poster_url,
+              poster_id: poster_id,
+              rating: rating,
+              subtype: subtype,
+              duration: duration,
+              imdb_id: imdb_id,
+              summary: summary,
+              e_duration: e_duration,
+              e_count: e_count
+          )
           puts "——————oOo——————"
           sleep 2
           break if error_seq > 5

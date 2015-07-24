@@ -16,7 +16,7 @@ begin
   #老千大拍档#http://movie.douban.com/subject/1302840/
   #book#     http://book.douban.com/subject/7000005/
   #庄子试妻#  http://movie.douban.com/subject/2000001/
-  uri = "http://movie.douban.com/subject/2004004/"
+  uri = "http://movie.douban.com/subject/4002115/"
   
   
   begin
@@ -222,10 +222,10 @@ begin
   
   doc.css('div#recommendations dl').each do |dl|
     puts /subject\/(\d*)/.match(dl.at_css('dt a').attr('href'))[1]
-    mc = /public\/(.*).jpg|mpic\/(.*).jpg/.match(dl.at_css('dt a img').attr('src'))
-    puts mc[1].nil? ? mc[2] : mc[1]
-    # puts /public\/(.*).jpg|mpic\/(.*).jpg/.match(dl.at_css('dt a img').attr('src'))[1]
-    puts /\/\/(.*)\.douban\.com/.match(dl.at_css('dt a img').attr('src'))[1]
+    
+    src = dl.at_css('dt a img').attr('src')
+    puts rcmd_poster_id = src.split('/')[-1].split('.')[0]
+    puts rcmd_poster_cdn = /\/\/(.*)\.douban\.com/.match(src)[1]
     puts dl.at_css('dd a').content
     puts '----------'
   end
