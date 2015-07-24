@@ -39,7 +39,7 @@ class MoviesController < ApplicationController
                                     "Cookie" => "dbcl2=#{cookie}"
                                 })
           rescue Mechanize::ResponseCodeError => e
-            error_seq += 1 if e.to_s.include?("403")
+            error_seq += 1 if e.to_s.include?("403 =>")
             puts  "MechanizeError|: #{e.to_s}"
             next
           end
