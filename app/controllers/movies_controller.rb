@@ -279,7 +279,7 @@ class MoviesController < ApplicationController
               e_count: e_count
           ) unless movie.nil?
           puts "——————oOo——————"
-          sleep 2
+          sleep mid % 2 + 1
           if error_seq > 5
             send_warning
             break
