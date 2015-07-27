@@ -1,6 +1,8 @@
 require 'nokogiri'
 require 'open-uri'
 require 'mechanize'
+require 'rest-client'
+require 'json'
 
 class MoviesController < ApplicationController
   before_action :set_movie, only: [:show, :edit, :update, :destroy]
@@ -278,10 +280,14 @@ class MoviesController < ApplicationController
           ) unless movie.nil?
           puts "——————oOo——————"
           sleep 2
-          break if error_seq > 5
+          if error_seq > 5
+            send_warning
+            break
+          end
         end
       end
       puts "fetch movie thread done!"
+      puts Rails.configuration.x.sendcloud.api_user
     end
   end
 
@@ -344,5 +350,24 @@ class MoviesController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def movie_params
       params.require(:movie).permit(:title, :cn_title, :original_title, :rating, :poster_url, :poster_id, :subtype, :pubyear, :duration, :imdb_id, :summary, :e_count, :e_duration)
+    end
+
+    def send_warning
+      conf =  Rails.application.config_for(:send_cloud)
+      ip = Socket.ip_address_list.detect{|intf| intf.ipv4_private?}
+      ip = ip.ip_address if ip
+      vars = JSON.dump({"to" => [conf['to']], "sub" => { "%server_num%" => [ip]} })
+      response = RestClient.post "http://sendcloud.sohu.com/webapi/mail.send_template.json",
+                                 :api_user => conf['api_user'], # 使用api_user和api_key进行验证
+                                 :api_key => conf['api_key'],
+                                 :from => conf['from'], # 发信人，用正确邮件地址替代
+                                 :fromname => 'Seed4Fans',
+                                 :substitution_vars => vars,
+                                 :template_invoke_name => 'seed4fans_403',
+                                 :subject => '服务异常'
+
+      puts ip
+      puts response.code
+      puts response.to_str
     end
 end
