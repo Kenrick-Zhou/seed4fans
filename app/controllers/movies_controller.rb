@@ -177,7 +177,7 @@ class MoviesController < ApplicationController
             if img.attr('alt') == '图片'
               puts pid = /public\/(.*).jpg/.match(img.attr('src'))[1]
               puts cdn = /\/\/(.*)\.douban\.com/.match(img.attr('src'))[1]
-              Photo.create(movie_id: mid, pid: pid)
+              Photo.create(movie_id: mid, pid: pid, cdn: cdn)
             end
           end
 
@@ -226,7 +226,7 @@ class MoviesController < ApplicationController
             # puts div.at_css('h3 span.comment-info span.rating').attr('title')#很差、较差、还行、推荐、力荐
             puts pubdate = div.css('h3 span.comment-info span')[-1].content.strip
             puts comment = div.at_css('p').content.strip
-            HotComment.create(movie_id: mid, did: did, rating: rating, pubdate: pubdate, comment: comment)
+            HotComment.create(movie_id: mid, did: did, name: name, rating: rating, pubdate: pubdate, comment: comment)
             puts '-------'
           end
 
@@ -248,7 +248,7 @@ class MoviesController < ApplicationController
               # puts div.at_css('h3 span.comment-info span.rating').attr('title')#很差、较差、还行、推荐、力荐
               puts pubdate = div.css('h3 span.comment-info span')[-1].content.strip
               puts comment = div.at_css('p').content.strip
-              NewComment.create(movie_id: mid, did: did, rating: rating, pubdate: pubdate, comment: comment)
+              NewComment.create(movie_id: mid, did: did, name: name, rating: rating, pubdate: pubdate, comment: comment)
               puts '-------'
             end
           end
