@@ -29,7 +29,7 @@ class MoviesController < ApplicationController
     Thread.new do
       start_id.upto(end_id) do |mid|
         movie, title, cn_title, original_title, pubyear = nil
-        poster_url, poster_id, rating, subtype, duration, imdb_id, summary, e_duration, e_count = nil
+        poster_url, poster_id, m_rating, subtype, duration, imdb_id, summary, e_duration, e_count = nil
         begin
           uri = "http://movie.douban.com/subject/#{mid}/"
           puts "→→→ start to fetch id:#{mid}"
@@ -65,7 +65,7 @@ class MoviesController < ApplicationController
 
           puts poster_url = doc.at_css('div#mainpic a img').attr('src')
           puts poster_id = poster_url.split('/')[-1].split('.')[0]
-          puts rating = doc.at_css('div#interest_sectl p.rating_self strong.rating_num').content
+          puts m_rating = doc.at_css('div#interest_sectl p.rating_self strong.rating_num').content
 
           subtype = 'movie'
           doc.css('div#info span.pl').each do |span|
@@ -222,6 +222,7 @@ class MoviesController < ApplicationController
             puts did = div.at_css('h3 span.comment-info a').attr('href').split('/')[-1]
             puts name = div.at_css('h3 span.comment-info a').content
             #很差、较差、还行、推荐、力荐
+            rating = nil
             puts rating = div.at_css('h3 span.comment-info span.rating').attr('title') unless div.at_css('h3 span.comment-info span.rating').nil?
             # puts div.at_css('h3 span.comment-info span.rating').attr('title')#很差、较差、还行、推荐、力荐
             puts pubdate = div.css('h3 span.comment-info span')[-1].content.strip
@@ -233,8 +234,6 @@ class MoviesController < ApplicationController
 
           puts '****************************************'
           puts '** 最新评论'
-          new_comment = nil
-
           if page.links_with(:text => '最新').size != 0
             page = page.links_with(:text => '最新')[-1].click
             doc = Nokogiri::HTML.parse(page.body, nil, 'utf-8')
@@ -244,6 +243,7 @@ class MoviesController < ApplicationController
               puts did = div.at_css('h3 span.comment-info a').attr('href').split('/')[-1]
               puts name = div.at_css('h3 span.comment-info a').content
               #很差、较差、还行、推荐、力荐
+              rating = nil
               puts rating = div.at_css('h3 span.comment-info span.rating').attr('title') unless div.at_css('h3 span.comment-info span.rating').nil?
               # puts div.at_css('h3 span.comment-info span.rating').attr('title')#很差、较差、还行、推荐、力荐
               puts pubdate = div.css('h3 span.comment-info span')[-1].content.strip
@@ -270,7 +270,7 @@ class MoviesController < ApplicationController
           movie.update(
               poster_url: poster_url,
               poster_id: poster_id,
-              rating: rating,
+              rating: m_rating,
               subtype: subtype,
               duration: duration,
               imdb_id: imdb_id,
