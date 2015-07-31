@@ -202,7 +202,7 @@ class MoviesController < ApplicationController
             puts rcmd_poster_id = src.split('/')[-1].split('.')[0]
             puts rcmd_poster_cdn = /\/\/(.*)\.douban\.com/.match(src)[1]
             puts rcmd_name = dl.at_css('dd a').content
-            Recommendation.create(movie_id: mid, rcmd_id: rcmd_id, rcmd_name: rcmd_name, rcmd_poster_id: rcmd_poster_id, rcmd_poster_cdn: rcmd_poster_cdn)
+            Recommendation.create_with(rcmd_name: rcmd_name, rcmd_poster_id: rcmd_poster_id, rcmd_poster_cdn: rcmd_poster_cdn).find_or_create_by(movie_id: mid, rcmd_id: rcmd_id)
             puts '----------'
           end
 
