@@ -142,7 +142,7 @@ class MoviesController < ApplicationController
             if span.attr('property') == 'v:genre'
               puts type = span.content
               type = Type.find_or_create_by(name: type)
-              MovieType.create(movie_id: mid, type_id: type.id, name: type.id)
+              MovieType.create(movie_id: mid, type_id: type.id, name: type.name)
             end
           end
 
