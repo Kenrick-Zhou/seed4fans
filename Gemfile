@@ -44,3 +44,5 @@ gem 'mechanize'
 
 gem 'mysql2'
 gem 'rest-client'
+
+gem 'oneapm_rpm'
