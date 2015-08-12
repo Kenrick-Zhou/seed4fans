@@ -105,7 +105,7 @@ class MoviesController < ApplicationController
           puts '****************************************'
           puts '** 又名'
           i = info_text.index('又名:')
-          akas = info_text[i+4, info_text.index("\n", i)-i].split('/').collect{|x| x.strip!} if i
+          akas = info_text[i+4, info_text.index("\n", i)-i].split('/').collect{|x| x.strip} if i
           if akas
             akas.each do |item|
               puts "又名：#{item}"
@@ -150,14 +150,14 @@ class MoviesController < ApplicationController
           puts '========================================'
           puts '== 国家/地区、语言'
           i = info_text.index('制片国家/地区:')
-          info_text[i+9, info_text.index("\n", i)-i].split('/').collect{|x| x.strip!}.each do |country|
+          info_text[i+9, info_text.index("\n", i)-i].split('/').collect{|x| x.strip}.each do |country|
             puts country
             country = Country.find_or_create_by(name: country)
             MovieCountry.create(movie_id: mid, country_id: country.id, name: country.name)
           end if info_text.index('制片国家/地区:')
 
           j = info_text.index('语言:')
-          info_text[j+4, info_text.index("\n", j)-j].split('/').collect{|x| x.strip!}.each do |language|
+          info_text[j+4, info_text.index("\n", j)-j].split('/').collect{|x| x.strip}.each do |language|
             puts language
             language = Language.find_or_create_by(name: language)
             MovieLanguage.create(movie_id: mid, language_id: language.id, name: language.name)
